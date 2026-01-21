@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 - TODAY, Marcel Savegnago <marcel.savegnago@escodoo.com.br>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_blog_post_form_scheduled" model="ir.ui.view">
+        <field name="name">blog.post.form.scheduled</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_form" />
+        <field name="arch" type="xml">
+            <field name="post_date" position="after">
+                <field name="scheduled_publication_date" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_blog_post_search_scheduled" model="ir.ui.view">
+        <field name="name">blog.post.search.scheduled</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_search" />
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <filter
+                    string="Published"
+                    name="published"
+                    domain="[('website_published', '=', True)]"
+                />
+                <filter
+                    string="Not Published"
+                    name="not_published"
+                    domain="[('website_published', '=', False)]"
+                />
+            </filter>
+            <filter name="last_contributor" position="after">
+                <filter
+                    string="Publication Date"
+                    name="group_by_publication_date"
+                    domain="[]"
+                    context="{'group_by': 'post_date:day'}"
+                />
+                <filter
+                    string="Scheduled Publication Date"
+                    name="group_by_scheduled_publication_date"
+                    domain="[]"
+                    context="{'group_by': 'scheduled_publication_date:day'}"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>
